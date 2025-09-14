@@ -14,7 +14,7 @@ fileInput[0].addEventListener("change", function() {
         const formData = new FormData();
         formData.append("file", fileInput[0].files[0]);
 
-        fetch("/api/analysis.php", {
+        fetch("/glocal_ent_thon/api/analysis.php", {
             method: "POST",
             body: formData
         })
