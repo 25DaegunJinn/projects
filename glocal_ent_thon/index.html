@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 취업 매칭 키오스크</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        
+        
+    </style>
+</head>
+<body class="min-h-screen gradient-bg">
+    <!-- 홈 화면 -->
+    <div id="homeScreen" class="min-h-screen flex flex-col">
+        <!-- 헤더 -->
+        <header class="bg-white/10 backdrop-blur-sm border-b border-white/20 p-6">
+            <div class="max-w-7xl mx-auto flex items-center justify-center">
+                <div class="flex items-center space-x-4">
+                    <!-- 로고 SVG -->
+                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                        <path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" fill="none"/>
+                    </svg>
+                    <h1 class="text-3xl font-bold text-white">스마트 취업 매칭 키오스크</h1>
+                </div>
+            </div>
+        </header>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="flex-1 flex items-center justify-center p-8">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- 왼쪽: 이력서 일러스트 -->
+                <div class="flex justify-center">
+                    <div class="relative">
+                        <svg class="w-80 h-96 text-white/90" fill="currentColor" viewBox="0 0 400 500">
+                            <!-- 이력서 배경 -->
+                            <rect x="50" y="50" width="300" height="400" rx="10" fill="white" stroke="#e5e7eb" stroke-width="2"/>
+                            
+                            <!-- 헤더 영역 -->
+                            <rect x="70" y="70" width="260" height="60" rx="5" fill="#f3f4f6"/>
+                            <circle cx="110" cy="100" r="20" fill="#9ca3af"/>
+                            <rect x="140" y="85" width="120" height="8" rx="4" fill="#6b7280"/>
+                            <rect x="140" y="105" width="80" height="6" rx="3" fill="#9ca3af"/>
+                            
+                            <!-- 콘텐츠 라인들 -->
+                            <rect x="70" y="150" width="200" height="6" rx="3" fill="#374151"/>
+                            <rect x="70" y="170" width="260" height="4" rx="2" fill="#9ca3af"/>
+                            <rect x="70" y="185" width="240" height="4" rx="2" fill="#9ca3af"/>
+                            <rect x="70" y="200" width="180" height="4" rx="2" fill="#9ca3af"/>
+                            
+                            <rect x="70" y="230" width="150" height="6" rx="3" fill="#374151"/>
+                            <rect x="70" y="250" width="220" height="4" rx="2" fill="#9ca3af"/>
+                            <rect x="70" y="265" width="200" height="4" rx="2" fill="#9ca3af"/>
+                            
+                            <rect x="70" y="295" width="120" height="6" rx="3" fill="#374151"/>
+                            <rect x="70" y="315" width="180" height="4" rx="2" fill="#9ca3af"/>
+                            <rect x="70" y="330" width="160" height="4" rx="2" fill="#9ca3af"/>
+                            
+                            <!-- AI 분석 아이콘 -->
+                            <circle cx="320" cy="80" r="25" fill="#667eea" class="pulse-animation"/>
+                            <path d="M310 75 l5 5 l10 -10" stroke="white" stroke-width="3" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 업로드 버튼 및 설명 -->
+                <div class="text-center lg:text-left">
+                    <h2 class="text-4xl font-bold text-white mb-6">
+                        AI가 분석하는<br>
+                        <span class="text-yellow-300">맞춤형 취업 매칭</span>
+                    </h2>
+                    <p class="text-xl text-white/80 mb-8 leading-relaxed">
+                        이력서를 업로드하면 AI가 즉시 분석하여<br>
+                        당신에게 최적화된 일자리를 추천해드립니다
+                    </p>
+                    
+                    <!-- 업로드 버튼 -->
+                    <div class="space-y-4">
+                        <button onclick="startMatching()" class="w-full lg:w-auto bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 card-shadow">
+                            📄 이력서 업로드하기
+                        </button>
+                        <p class="text-white/60 text-sm">PDF, DOC, DOCX 파일 지원</p>
+                    </div>
+
+                    <!-- 프로세스 미리보기 -->
+                    <div class="mt-12 grid grid-cols-3 gap-4 text-center">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                            <div class="text-2xl mb-2">📤</div>
+                            <div class="text-white font-medium">업로드</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                            <div class="text-2xl mb-2">🤖</div>
+                            <div class="text-white font-medium">AI 분석</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                            <div class="text-2xl mb-2">💼</div>
+                            <div class="text-white font-medium">매칭 결과</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 분석 진행 화면 -->
+    <div id="analysisScreen" class="min-h-screen flex-col items-center justify-center p-8 hidden">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-12 card-shadow">
+                <div class="mb-8">
+                    <div class="w-24 h-24 mx-auto mb-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                        <svg class="w-12 h-12 text-gray-900 pulse-animation" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mb-4">AI가 이력서를 분석중입니다</h2>
+                    <p class="text-white/80 text-lg" id="analysisText">이력서를 업로드하고 있습니다...</p>
+                </div>
+
+                <!-- 진행률 바 -->
+                <div class="w-full bg-white/20 rounded-full h-3 mb-6">
+                    <div id="progressBar" class="bg-yellow-400 h-3 rounded-full progress-bar" style="width: 0%"></div>
+                </div>
+                <div class="text-white/60" id="progressText">0%</div>
+
+                <!-- 분석 단계 -->
+                <div class="mt-8 space-y-4">
+                    <div id="step1" class="flex items-center text-white/60">
+                        <div class="w-6 h-6 rounded-full border-2 border-white/60 mr-3 flex items-center justify-center">
+                            <div class="w-2 h-2 bg-white/60 rounded-full hidden"></div>
+                        </div>
+                        <span>이력서 파일 분석</span>
+                    </div>
+                    <div id="step2" class="flex items-center text-white/60">
+                        <div class="w-6 h-6 rounded-full border-2 border-white/60 mr-3 flex items-center justify-center">
+                            <div class="w-2 h-2 bg-white/60 rounded-full hidden"></div>
+                        </div>
+                        <span>스킬 및 경력 매칭</span>
+                    </div>
+                    <div id="step3" class="flex items-center text-white/60">
+                        <div class="w-6 h-6 rounded-full border-2 border-white/60 mr-3 flex items-center justify-center">
+                            <div class="w-2 h-2 bg-white/60 rounded-full hidden"></div>
+                        </div>
+                        <span>맞춤 일자리 검색</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 결과 화면 -->
+    <div id="resultScreen" class="min-h-screen p-8 hidden">
+        <div class="max-w-7xl mx-auto">
+            <!-- 헤더 -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-white mb-4">🎯 맞춤 일자리 추천 결과</h2>
+                <p class="text-white/80 text-lg">AI가 분석한 당신의 프로필에 최적화된 채용 정보입니다</p>
+            </div>
+
+            <!-- 추천 기업 카드들 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- 기업 1 -->
+                <div class="bg-white rounded-2xl p-6 card-shadow slide-in">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-xl">T</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">테크코리아</h3>
+                            <p class="text-gray-600">IT 서비스</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">직무:</span>
+                            <span class="font-medium">프론트엔드 개발자</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">경력:</span>
+                            <span class="font-medium">2-5년</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">연봉:</span>
+                            <span class="font-medium text-green-600">4,000-6,000만원</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">위치:</span>
+                            <span class="font-medium">서울 강남구</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                            매칭률 95%
+                        </div>
+                        <div class="text-sm text-gray-500">마감 7일 전</div>
+                    </div>
+                </div>
+
+                <!-- 기업 2 -->
+                <div class="bg-white rounded-2xl p-6 card-shadow slide-in">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-xl">S</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">스마트솔루션</h3>
+                            <p class="text-gray-600">소프트웨어 개발</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">직무:</span>
+                            <span class="font-medium">풀스택 개발자</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">경력:</span>
+                            <span class="font-medium">3-7년</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">연봉:</span>
+                            <span class="font-medium text-green-600">5,000-7,500만원</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">위치:</span>
+                            <span class="font-medium">서울 서초구</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                            매칭률 88%
+                        </div>
+                        <div class="text-sm text-gray-500">마감 12일 전</div>
+                    </div>
+                </div>
+
+                <!-- 기업 3 -->
+                <div class="bg-white rounded-2xl p-6 card-shadow slide-in">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-xl">D</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">디지털이노베이션</h3>
+                            <p class="text-gray-600">핀테크</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">직무:</span>
+                            <span class="font-medium">백엔드 개발자</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">경력:</span>
+                            <span class="font-medium">1-4년</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">연봉:</span>
+                            <span class="font-medium text-green-600">3,500-5,500만원</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 w-16">위치:</span>
+                            <span class="font-medium">서울 마포구</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
+                            매칭률 82%
+                        </div>
+                        <div class="text-sm text-gray-500">마감 5일 전</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 액션 버튼들 -->
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 card-shadow">
+                <h3 class="text-2xl font-bold text-white mb-6 text-center">다음 단계를 선택하세요</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <button onclick="applyNow()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
+                        <span>✅</span>
+                        <span>즉시 지원하기</span>
+                    </button>
+                    <button onclick="getEducation()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
+                        <span>📚</span>
+                        <span>교육 추천 받기</span>
+                    </button>
+                    <button onclick="recordVideo()" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
+                        <span>🎥</span>
+                        <span>영상 자기소개 남기기</span>
+                    </button>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <button onclick="goHome()" class="text-white/80 hover:text-white underline">
+                        처음으로 돌아가기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const analysisSteps = [
+            "이력서를 업로드하고 있습니다...",
+            "AI가 이력서 내용을 분석중입니다...",
+            "스킬과 경력을 매칭하고 있습니다...",
+            "최적의 일자리를 검색중입니다...",
+            "분석이 완료되었습니다!"
+        ];
+
+        function startMatching() {
+            document.getElementById('homeScreen').classList.add('hidden');
+            document.getElementById('analysisScreen').classList.remove('hidden');
+            document.getElementById('analysisScreen').classList.add('flex');
+            
+            simulateAnalysis();
+        }
+
+        function simulateAnalysis() {
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const analysisText = document.getElementById('analysisText');
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 15 + 5;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                progressText.textContent = Math.round(progress) + '%';
+                
+                // 단계별 텍스트 업데이트
+                if (progress < 25) {
+                    analysisText.textContent = analysisSteps[0];
+                    updateStepStatus('step1', true);
+                } else if (progress < 50) {
+                    analysisText.textContent = analysisSteps[1];
+                    updateStepStatus('step1', false);
+                    updateStepStatus('step2', true);
+                } else if (progress < 75) {
+                    analysisText.textContent = analysisSteps[2];
+                    updateStepStatus('step2', false);
+                    updateStepStatus('step3', true);
+                } else if (progress < 100) {
+                    analysisText.textContent = analysisSteps[3];
+                } else {
+                    analysisText.textContent = analysisSteps[4];
+                    updateStepStatus('step3', false);
+                    clearInterval(interval);
+                    setTimeout(showResults, 1000);
+                }
+            }, 200);
+        }
+
+        function updateStepStatus(stepId, isActive) {
+            const step = document.getElementById(stepId);
+            const circle = step.querySelector('.w-6');
+            const dot = step.querySelector('.w-2');
+            
+            if (isActive) {
+                step.classList.remove('text-white/60');
+                step.classList.add('text-yellow-400');
+                circle.classList.remove('border-white/60');
+                circle.classList.add('border-yellow-400');
+                dot.classList.remove('hidden', 'bg-white/60');
+                dot.classList.add('bg-yellow-400');
+            } else {
+                step.classList.remove('text-yellow-400');
+                step.classList.add('text-green-400');
+                circle.classList.remove('border-yellow-400');
+                circle.classList.add('border-green-400', 'bg-green-400');
+                dot.classList.remove('bg-yellow-400');
+                dot.classList.add('bg-white');
+            }
+        }
+
+        function showResults() {
+            document.getElementById('analysisScreen').classList.add('hidden');
+            document.getElementById('analysisScreen').classList.remove('flex');
+            document.getElementById('resultScreen').classList.remove('hidden');
+        }
+
+        function applyNow() {
+            alert('지원서가 성공적으로 제출되었습니다! 기업에서 연락드릴 예정입니다.');
+        }
+
+        function getEducation() {
+            alert('맞춤형 교육 과정을 추천해드렸습니다. 이메일을 확인해주세요.');
+        }
+
+        function recordVideo() {
+            alert('영상 자기소개 녹화 기능이 실행됩니다. 카메라 권한을 허용해주세요.');
+        }
+
+        function goHome() {
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('homeScreen').classList.remove('hidden');
+            
+            // 초기화
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('progressText').textContent = '0%';
+            document.getElementById('analysisText').textContent = '이력서를 업로드하고 있습니다...';
+            
+            // 단계 초기화
+            ['step1', 'step2', 'step3'].forEach(stepId => {
+                const step = document.getElementById(stepId);
+                const circle = step.querySelector('.w-6');
+                const dot = step.querySelector('.w-2');
+                
+                step.className = 'flex items-center text-white/60';
+                circle.className = 'w-6 h-6 rounded-full border-2 border-white/60 mr-3 flex items-center justify-center';
+                dot.className = 'w-2 h-2 bg-white/60 rounded-full hidden';
+            });
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e5e41351eeb327',t:'MTc1Nzc0ODEyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
